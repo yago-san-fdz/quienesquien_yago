@@ -42,10 +42,11 @@ jugar :-
     hacer_pregunta(TodosPersonajes, RasgosUnicos).
 
 hacer_pregunta([personaje(nombre(N), _)], _) :-
-    format('El personaje es: ~w~n', [N]).
+    format('El personaje es: ~w~n', [N]),
+    preguntar_otra_vez.
 hacer_pregunta(Personajes, Rasgos) :-
     seleccionar_mejor_rasgo(Personajes, Rasgos, MejorRasgo),
-    format('¿El personaje tiene ~w? (s/n)~n', [MejorRasgo]),
+    preguntar_rasgo(MejorRasgo),  % Call to preguntar_rasgo
     read_line_to_string(user_input, Respuesta),
     (Respuesta == "s" -> Resp = s; Resp = n),
     filtrar_personajes(Personajes, MejorRasgo, Resp, NuevosPersonajes),
@@ -75,6 +76,12 @@ filtrar_personajes(Personajes, Rasgo, n, NuevosPersonajes) :-
 
 % Preguntar rasgo género (por cohesión)
 preguntar_rasgo(MejorRasgo) :-
-    (MejorRasgo == 'masculino' ; MejorRasgo == 'femenino')
+    (MejorRasgo == 'hombre' ; MejorRasgo == 'mujer')
     -> format('¿El personaje parece ~w? (s/n)~n', [MejorRasgo])
     ; format('¿El personaje tiene ~w? (s/n)~n', [MejorRasgo]).
+
+% Preguntar si quiere jugar otra vez
+preguntar_otra_vez :-
+    writeln('¿Quieres jugar otra vez? (s/n)'),
+    read_line_to_string(user_input, Respuesta),
+    (Respuesta == "s" -> jugar; writeln('¡Hasta luego!')).
