@@ -5,36 +5,39 @@ Agente que adivina en qué personaje estás pensando del famoso juego ¿Quién e
 
 ## Instalación
 Antes de nada necesitaremos:
-- Python 3.10
-- Conda (para los requirements!)
 - Prolog:
 https://www.swi-prolog.org/download/stable
 
+[ ! ] Cuidado, a veces puede no añadirse al PATH correctamente
+
+- Proyecto ¿Quién es quién?: recomendable ejecutar en Visual Studio Code, pero se puede utilizar el propio intérprete de prolog!
+
 ### Entorno
-```sh
-$ conda create -n qqyago python=3.10
-$ conda activate qqyago
-```
-### Requisitos
-```sh
-$ pip install -r requirements.txt
-```
+- Probado con la versión estable de prolog: SWI-Prolog 9.2.5-1
+
 ### ¿Cómo jugar?
-- 1- Ejecutar el programa en el intérprete de prolog (usando iniciar_juego)
-- 2- Presionar [↵] para comenzar el juego
-- 3- Responder "s" para Sí y "n" para No según las preguntas del intérprete
+
+![Tablero](img/tablero.jpg)
+
+- 1- Piensa en un personaje
+- 2- Responde a las preguntas
+- 3- Recibe el nombre de tu personaje en unas 6 pistas!
 
 ### Ejecutar desde la consola de Visual Studio Code
 - Instalar extensión de Prolog (Peng Lv)
 - Abrir terminal en el directorio de 'qq_data.pl'
-- Escribir swipl en la terminal
-> Posible problema:
-- Si no reconoce swipl recuerda revisar el PATH:
->Meterlo por consola:
+- Escribir en la terminal:
+
+```sh
+swipl qq_data.pl
+```
+
+> Posible problema:  ¡Si no reconoce el comando swipl recuerda revisar el PATH!
+
+#### Introducir PATH por consola (una sesión de terminal de uso):
 ```sh
  $env:Path += ";C:\Program Files\swipl\bin"
  ```
-- Usar el comando: consult('qq_data.pl')
 
 ## Preguntas pre-desarrollo
 
