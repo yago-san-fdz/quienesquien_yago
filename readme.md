@@ -15,7 +15,10 @@ $ conda activate qqyago
 ```sh
 $ pip install -r requirements.txt
 ```
-
+### ¿Cómo jugar?
+1- Ejecutar el programa en el intérprete de prolog
+2- Presionar [↵] para comenzar el juego
+3- Responder "s" para Sí y "n" para No según las preguntas del intérprete
 
 ## Preguntas pre-desarrollo
 
