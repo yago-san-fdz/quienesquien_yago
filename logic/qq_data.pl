@@ -72,3 +72,9 @@ filtrar_personajes(Personajes, Rasgo, s, NuevosPersonajes) :-
     include(tiene_rasgo(Rasgo), Personajes, NuevosPersonajes).
 filtrar_personajes(Personajes, Rasgo, n, NuevosPersonajes) :-
     exclude(tiene_rasgo(Rasgo), Personajes, NuevosPersonajes).
+
+% Preguntar rasgo género (por cohesión)
+preguntar_rasgo(MejorRasgo) :-
+    (MejorRasgo == 'masculino' ; MejorRasgo == 'femenino')
+    -> format('¿El personaje parece ~w? (s/n)~n', [MejorRasgo])
+    ; format('¿El personaje tiene ~w? (s/n)~n', [MejorRasgo]).
