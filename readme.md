@@ -1,10 +1,14 @@
 # ¿Quién es quién?
+Agente que adivina en qué personaje estás pensando del famoso juego ¿Quién es quién?
+- No puede preguntarte el (ambiguo) rasgo Género la primera vez
+- Solo se basa en los rasgos físicos más definidos de los personajes
 
 ## Instalación
 Antes de nada necesitaremos:
 - Python 3.10
 - Conda (para los requirements!)
-- Prolog
+- Prolog:
+https://www.swi-prolog.org/download/stable
 
 ### Entorno
 ```sh
@@ -16,9 +20,21 @@ $ conda activate qqyago
 $ pip install -r requirements.txt
 ```
 ### ¿Cómo jugar?
-1- Ejecutar el programa en el intérprete de prolog (usando iniciar_juego)
-2- Presionar [↵] para comenzar el juego
-3- Responder "s" para Sí y "n" para No según las preguntas del intérprete
+- 1- Ejecutar el programa en el intérprete de prolog (usando iniciar_juego)
+- 2- Presionar [↵] para comenzar el juego
+- 3- Responder "s" para Sí y "n" para No según las preguntas del intérprete
+
+### Ejecutar desde la consola de Visual Studio Code
+- Instalar extensión de Prolog (Peng Lv)
+- Abrir terminal en el directorio de 'qq_data.pl'
+- Escribir swipl en la terminal
+> Posible problema:
+- Si no reconoce swipl recuerda revisar el PATH:
+>Meterlo por consola:
+```sh
+ $env:Path += ";C:\Program Files\swipl\bin"
+ ```
+- Usar el comando: consult('qq_data.pl')
 
 ## Preguntas pre-desarrollo
 
@@ -62,4 +78,4 @@ https://stackoverflow.com/questions/24101926/prolog-getting-frequency-of-list
 
 - Estructura y ejemplos:
 https://github.com/dfleta/quienesquien
-
+https://www.youtube.com/watch?v=WagksXYJXPY&ab_channel=ArnauG%C3%B3mez

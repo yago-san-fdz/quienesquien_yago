@@ -47,13 +47,12 @@ pj(susan, [mujer, cabello_largo, cabello_blanco, cabello_gris, ojos_marrones, la
 
 pj(max, [hombre, bigote, cabello_negro, ojos_marrones, boca_grande, labios_gruesos, nariz_grande, orejas_grandes, cabello_corto]).
 
-% Verifica si un pj tiene un rasgo en concreto
-pj_tiene_rasgos(nombre, rasgo) :-
-    pj(nombre, Rasgos), member(rasgo, Rasgos).
+% Verifica si un personaje tiene un rasgo en concreto
+pj_tiene_rasgo(Nombre, Rasgo) :-
+    pj(Nombre, Rasgos),
+    member(Rasgo, Rasgos).
 
-% Calcular la frecuencia de cada rasgo en una lista de pjs
-% - Esto nos servirá para entender en que orden vamos a preguntar los rasgos (a recordar que el género no puede ser el primero)
-
+% Calcular la frecuencia de cada rasgo en una lista de personajes
 frecuencia_rasgos([], []).
 frecuencia_rasgos([H|T], Frecuencias) :-
     frecuencia_rasgos(T, FrecT),
@@ -72,23 +71,40 @@ incrementar_frecuencia(R, [H|T], [H|T1]) :-
     H \= (R, _),
     incrementar_frecuencia(R, T, T1).
 
+% Seleccionar el mejor rasgo (excluyendo el género en la primera pregunta)
+mejor_rasgo([Rasgo], Rasgo, _).
+mejor_rasgo([R|T], MejorRasgo, Primera) :-
+    mejor_rasgo(T, MejorR, Primera),
+    pj_tiene_rasgo_count(R, CountR),
+    pj_tiene_rasgo_count(MejorR, CountMejor),
+    (Primera, (R == hombre; R == mujer) -> MejorRasgo = MejorR
+    ; abs(CountR - 50) < abs(CountMejor - 50) -> MejorRasgo = R
+    ; MejorRasgo = MejorR).
+
+pj_tiene_rasgo_count(Rasgo, Count) :-
+    findall(Nombre, pj_tiene_rasgo(Nombre, Rasgo), Lista),
+    length(Lista, Count).
+
+% Iniciar el juego
 iniciar_juego :-
-    write('¡Piensa en un personaje del tablero de ¿Quién es Quién? y presiona [↵] cuando estés listo!'), nl,
+    write('Piensa en un personaje y presiona enter cuando estés listo.'), nl,
     read_line_to_string(user_input, _),
     pj_list(Personajes),
-    hacer_preguntas(Personajes).
+    hacer_preguntas(Personajes, true).
 
-hacer_preguntas(Personajes) :-
+% Hacer preguntas al usuario
+hacer_preguntas(Personajes, Primera) :-
     frecuencia_rasgos(Personajes, Frecuencias),
     mejores_preguntas(Frecuencias, MejoresRasgos),
-    mejor_rasgo(MejoresRasgos, MejorRasgo),
-    preguntar(MejorRasgo, Personajes).
+    mejor_rasgo(MejoresRasgos, MejorRasgo, Primera),
+    preguntar(MejorRasgo, Personajes, Primera).
 
-preguntar(Rasgo, Personajes) :-
+preguntar(Rasgo, Personajes, Primera) :-
     format('¿El personaje tiene el rasgo ~w? (s/n)', [Rasgo]), nl,
     read_line_to_string(user_input, Respuesta),
     ( Respuesta = "s" -> incluir_rasgo(Personajes, Rasgo, NuevosPersonajes) ; excluir_rasgo(Personajes, Rasgo, NuevosPersonajes) ),
-    ( NuevosPersonajes = [Unico] -> write('Tu personaje es: '), write(Unico), nl; hacer_preguntas(NuevosPersonajes) ).
+    ( NuevosPersonajes = [Unico] -> write('Tu personaje es: '), write(Unico), nl
+    ; hacer_preguntas(NuevosPersonajes, false) ).
 
 incluir_rasgo(Personajes, Rasgo, NuevosPersonajes) :-
     findall(Nombre, (member(Nombre, Personajes), pj_tiene_rasgo(Nombre, Rasgo)), NuevosPersonajes).
