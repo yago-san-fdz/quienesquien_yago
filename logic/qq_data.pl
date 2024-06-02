@@ -1,4 +1,4 @@
-% Definición de cada pj con sus rasgos
+% Definición de cada personaje con sus rasgos
 pj(herman, [hombre, cabello_rojo, calvo, nariz_grande, ojos_marrones, cejas_gruesas]).
 pj(maria, [mujer, cabello_largo, sombrero, pendientes, cabello_castaño, ojos_marrones, boca_pequeña, cejas_delgadas, nariz_pequeña]).
 pj(claire, [mujer, gafas, sombrero, cabello_rojo, ojos_marrones, boca_pequeña, nariz_pequeña]).
@@ -23,7 +23,6 @@ pj(sam, [hombre, gafas, calvo, cabello_blanco, cabello_gris, ojos_marrones, boca
 pj(tom, [hombre, gafas, calvo, cabello_negro, ojos_azules, boca_pequeña, rostro_largo, nariz_pequeña]).
 pj(susan, [mujer, cabello_largo, cabello_blanco, cabello_gris, ojos_marrones, labios_gruesos, mejillas, mejillas_rosadas, nariz_pequeña, patillas]).
 pj(max, [hombre, bigote, cabello_negro, ojos_marrones, boca_grande, labios_gruesos, nariz_grande, orejas_grandes, cabello_corto]).
-
 
 % Verifica si un personaje tiene un rasgo en concreto
 pj_tiene_rasgo(Nombre, Rasgo) :-
@@ -91,3 +90,15 @@ excluir_rasgo(Personajes, Rasgo, NuevosPersonajes) :-
     findall(Nombre, (member(Nombre, Personajes), \+ pj_tiene_rasgo(Nombre, Rasgo)), NuevosPersonajes).
 
 pj_list(Lista) :- findall(Nombre, pj(Nombre, _), Lista).
+
+mejores_preguntas(Frecuencias, MejoresRasgos) :-
+    findall(R, (member((R, _), Frecuencias)), MejoresRasgos).
+
+% Directiva de inicialización para iniciar el juego al cargar el archivo
+:- initialization(main).
+
+main :-
+    write('¿Quieres jugar? (s/n)'), nl,
+    read_line_to_string(user_input, Respuesta),
+    ( Respuesta = "s" -> iniciar_juego
+    ; write('Tal vez en otro momento.'), nl, halt ).
