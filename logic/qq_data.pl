@@ -71,3 +71,29 @@ incrementar_frecuencia(R, [(R, N)|T], [(R, N1)|T]) :-
 incrementar_frecuencia(R, [H|T], [H|T1]) :-
     H \= (R, _),
     incrementar_frecuencia(R, T, T1).
+
+iniciar_juego :-
+    write('¡Piensa en un personaje del tablero de ¿Quién es Quién? y presiona [↵] cuando estés listo!'), nl,
+    read_line_to_string(user_input, _),
+    pj_list(Personajes),
+    hacer_preguntas(Personajes).
+
+hacer_preguntas(Personajes) :-
+    frecuencia_rasgos(Personajes, Frecuencias),
+    mejores_preguntas(Frecuencias, MejoresRasgos),
+    mejor_rasgo(MejoresRasgos, MejorRasgo),
+    preguntar(MejorRasgo, Personajes).
+
+preguntar(Rasgo, Personajes) :-
+    format('¿El personaje tiene el rasgo ~w? (s/n)', [Rasgo]), nl,
+    read_line_to_string(user_input, Respuesta),
+    ( Respuesta = "s" -> incluir_rasgo(Personajes, Rasgo, NuevosPersonajes) ; excluir_rasgo(Personajes, Rasgo, NuevosPersonajes) ),
+    ( NuevosPersonajes = [Unico] -> write('Tu personaje es: '), write(Unico), nl; hacer_preguntas(NuevosPersonajes) ).
+
+incluir_rasgo(Personajes, Rasgo, NuevosPersonajes) :-
+    findall(Nombre, (member(Nombre, Personajes), pj_tiene_rasgo(Nombre, Rasgo)), NuevosPersonajes).
+
+excluir_rasgo(Personajes, Rasgo, NuevosPersonajes) :-
+    findall(Nombre, (member(Nombre, Personajes), \+ pj_tiene_rasgo(Nombre, Rasgo)), NuevosPersonajes).
+
+pj_list(Lista) :- findall(Nombre, pj(Nombre, _), Lista).
