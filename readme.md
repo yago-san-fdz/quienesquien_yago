@@ -4,7 +4,7 @@
 Antes de nada necesitaremos:
 - Python 3.10
 - Conda (para los requirements!)
-- Pysweep
+- Prolog
 
 ### Entorno
 ```sh
@@ -53,4 +53,10 @@ El motor de inferencia de prolog es muy útil al lidiar con estos problemas de b
 Cada personaje (sea rival o propio) del juego se trata de una instancia con características/variables (nombre + resto de características)
 Esto nos ayuda a descomponer la consulta de objetivo de la lista de atributos que vamos a focalizar en nuestras preguntas a la hora de averiguar el resultado.
 
+### BIBLIOGRAFÍA
+- Inspiración para la frecuencia:
+https://stackoverflow.com/questions/24101926/prolog-getting-frequency-of-list
+
+- Estructura y ejemplos:
+https://github.com/dfleta/quienesquien
 
