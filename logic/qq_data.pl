@@ -50,3 +50,24 @@ pj(max, [hombre, bigote, cabello_negro, ojos_marrones, boca_grande, labios_grues
 % Verifica si un pj tiene un rasgo en concreto
 pj_tiene_rasgos(nombre, rasgo) :-
     pj(nombre, Rasgos), member(rasgo, Rasgos).
+
+% Calcular la frecuencia de cada rasgo en una lista de pjs
+% - Esto nos servirá para entender en que orden vamos a preguntar los rasgos (a recordar que el género no puede ser el primero)
+
+frecuencia_rasgos([], []).
+frecuencia_rasgos([H|T], Frecuencias) :-
+    frecuencia_rasgos(T, FrecT),
+    pj(H, Rasgos),
+    contar_rasgos(Rasgos, FrecT, Frecuencias).
+
+contar_rasgos([], Frecuencias, Frecuencias).
+contar_rasgos([R|RT], Frecuencias, Resultado) :-
+    incrementar_frecuencia(R, Frecuencias, FrecTemp),
+    contar_rasgos(RT, FrecTemp, Resultado).
+
+incrementar_frecuencia(R, [], [(R, 1)]).
+incrementar_frecuencia(R, [(R, N)|T], [(R, N1)|T]) :-
+    N1 is N + 1.
+incrementar_frecuencia(R, [H|T], [H|T1]) :-
+    H \= (R, _),
+    incrementar_frecuencia(R, T, T1).
