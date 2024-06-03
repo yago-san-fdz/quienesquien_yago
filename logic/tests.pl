@@ -19,14 +19,14 @@ test(caracteristicas_personaje) :-
     assertion(member(calva, Caracteristicas)),
     assertion(length(Caracteristicas, 6)).
 
-% Seleccionar mejor rasgo
+% Test para verificar la correcta selección del mejor rasgo
 test(seleccion_mejor_rasgo) :-
     findall(personaje(nombre(N), caracteristicas(Caracteristicas)), personaje(nombre(N), caracteristicas(Caracteristicas)), TodosPersonajes),
     findall(Caracteristica, (personaje(_, caracteristicas(Caracteristicas)), member(Caracteristica, Caracteristicas)), TodosRasgos),
     list_to_set(TodosRasgos, RasgosUnicos),
     seleccionar_mejor_rasgo(TodosPersonajes, RasgosUnicos, MejorRasgo),
-    assertion(MejorRasgo \= _).  % El mejor rasgo debe ser uno de los rasgos únicos
-
+    assertion(member(MejorRasgo, RasgosUnicos)).  % El mejor rasgo debe ser uno de los rasgos únicos
+    
 % Filtro de personajes por rasgo
 test(filtrar_personajes) :-
     findall(personaje(nombre(N), caracteristicas(Caracteristicas)), personaje(nombre(N), caracteristicas(Caracteristicas)), TodosPersonajes),
@@ -37,9 +37,6 @@ test(filtrar_personajes) :-
 
 % Test para verificar la pregunta del rasgo
 test(preguntar_rasgo_hombre) :-
-    preguntar_rasgo(hombre),
-    current_output(Output),
-    set_stream(Output, tty(true)),
     with_output_to(string(S), preguntar_rasgo(hombre)),
     assertion(sub_string(S, _, _, _, '¿El personaje parece hombre? (s/n)')).
 
