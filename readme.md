@@ -39,6 +39,11 @@ swipl qq_data.pl
  $env:Path += ";C:\Program Files\swipl\bin"
  ```
 
+### Ejecutar TESTS
+```sh
+swipl tests.pl
+```
+
 ## Preguntas pre-desarrollo
 
 ### 1. Optimización vs Búsquedas
