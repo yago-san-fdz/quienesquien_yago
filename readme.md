@@ -68,7 +68,7 @@ Usando prolog para nuestro algoritmo podremos expresar este problema lógico de 
 
 Utilizaremos el correspondiente a un "Agente reactivo basado en modelos"
 
-![Diagrama del Agente](img/diagrama.png)
+![Diagrama del Agente](img/diagrama.jpg)
 
 ### 5. Programación lógica
 
